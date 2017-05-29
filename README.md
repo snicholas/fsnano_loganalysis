@@ -1,7 +1,5 @@
 # Log analysys project
 
-The project is based on [ud036_StarterCode](https://github.com/adarsh0806/ud036_StarterCode)
-
 The main scope is to answer 3 questions:
 * What are the most popular three articles of all time?
 * Who are the most popular article authors of all time?
