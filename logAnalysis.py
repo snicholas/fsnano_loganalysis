@@ -1,13 +1,15 @@
-#!python3
+#!/usr/bin/env python3
 import psycopg2
 import sys
-
-db = None
 
 
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
-    return psycopg2.connect("dbname=news")
+    try:
+        return psycopg2.connect("dbname=news")
+    except:
+        print("There was an error connecting to the news database.")
+        return None
 
 
 def getMostPopular3Articles():
@@ -38,14 +40,14 @@ def getMostPopularAuthors():
 
 def getDaysWithMore1PercError():
     print("\n-----------------------------------------------------------")
-    print('Days with more than 1% of erros:')
+    print('Days with more than 1% of errors:')
     db = connect()
     c = db.cursor()
     c.execute('select * from errorrequestperc where perc > 1;')
     res = c.fetchall()
     db.close()
     for l in res:
-        print("%s -- %s" % (l[0],round(l[1],2)))
+        print("%s -- %s" % (l[0], round(l[1], 2)))
     print("-----------------------------------------------------------\n")
 
 

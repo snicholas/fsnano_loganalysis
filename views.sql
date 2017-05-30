@@ -1,4 +1,4 @@
-create view authorsarticles as
+CREATE OR REPLACE VIEW authorsarticles as
     SELECT authors.name,
             concat('/article/', articles.slug) AS path
     FROM articles,authors
@@ -6,7 +6,7 @@ create view authorsarticles as
     GROUP BY articles.author, authors.name, articles.slug
     ORDER BY articles.author;
 
-create view authorviews as
+CREATE OR REPLACE VIEW authorviews as
     SELECT ll.name, sum(ll.numviews) AS totalviews
     FROM ( SELECT authorsarticles.name,
                   count(log.path) AS numviews
@@ -17,7 +17,13 @@ create view authorviews as
     GROUP BY ll.name
     ORDER BY (sum(ll.numviews)) DESC;
 
-create view errorrequest as
+CREATE OR REPLACE VIEW totalrequest as 
+    SELECT date(log."time") AS data, count(*) AS totalrequest
+    FROM log
+    GROUP BY (date(log."time"))
+    ORDER BY (date(log."time"));
+
+CREATE OR REPLACE VIEW errorrequest as
     SELECT date(log."time") AS data,
             count(*) AS totalrequest
     FROM log
@@ -25,24 +31,20 @@ create view errorrequest as
     GROUP BY (date(log."time"))
     ORDER BY (date(log."time"));
 
-create view errorrequestperc as
+CREATE OR REPLACE VIEW errorrequestperc as
 	SELECT err.data,
     err.totalrequest::double precision / totreq.totalrequest::double precision * 100::double precision AS perc
     FROM errorrequest err, totalrequest totreq
     WHERE err.data = totreq.data;
 
-create view mostviewedpath as 
-	SELECT log.path, count(log.path) AS numviews
+CREATE OR REPLACE VIEW mostviewedpath as 
+	SELECT articles.title, count(log.path) AS numviews
     FROM log, articles
     WHERE log.path = concat('/article/', articles.slug)
-    GROUP BY log.path
+    GROUP BY log.path,articles.title
     ORDER BY (count(log.path)) DESC
     LIMIT 3;
 
 
-create view totalrequest as 
-    SELECT date(log."time") AS data, count(*) AS totalrequest
-    FROM log
-    GROUP BY (date(log."time"))
-    ORDER BY (date(log."time"));
+
 

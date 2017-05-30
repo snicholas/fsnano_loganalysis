@@ -1,13 +1,18 @@
 # Log analysys project
 
-The main scope is to answer 3 questions:
+The main scope is to answer 3 questions about the news database:
+
 * What are the most popular three articles of all time?
 * Who are the most popular article authors of all time?
 * On which days did more than 1% of requests lead to errors? 
 
 ## Usage
 To run the program you need python 3 (tested with version 3.5.2) and the new database from the [Fullstack Nanodegree Virtual machine](https://github.com/udacity/fullstack-nanodegree-vm) .
-
+Also you need to run the views.sql file. 
+```
+psql -d news
+\i views.sql
+```
 Inside the virtual machine running `python3 logAnalysis.py` will show usage message.
 There are 4 possible paramaters to pass:
 * -a : will print results for all the 3 questions
