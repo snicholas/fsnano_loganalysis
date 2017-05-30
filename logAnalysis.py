@@ -54,11 +54,11 @@ def getDaysWithMore1PercError():
 def printUsage():
     print('\nUsage: python3 logAnalysis.py [options]\n\n')
     print('python3 logAnalysis.py -a : prints out all logs\n\n')
-    print('''python3 logAnalysis.py -getMostPopular3Articles :
+    print('''python3 logAnalysis.py -getMostPopular3Articles or -popArt :
     prints out the 3 most popular articles of all time\n\n''')
-    print('''python3 logAnalysis.py -getMostPopularAuthors : prints out
+    print('''python3 logAnalysis.py -getMostPopularAuthors or -popauth : prints out
     the authors ordered by the sum of view of their articles\n\n''')
-    print('''python3 logAnalysis.py -getDaysWithMore1PercError : prints out
+    print('''python3 logAnalysis.py -getDaysWithMore1PercError or -errdays : prints out
     the day where there was more than 1\% of error\n''')
     sys.exit()
 
@@ -70,11 +70,11 @@ def main(argv):
         getMostPopular3Articles()
         getMostPopularAuthors()
         getDaysWithMore1PercError()
-    elif argv[0] == '-getMostPopular3Articles':
+    elif argv[0] == '-getMostPopular3Articles' or argv[0] =='-popart':
         getMostPopular3Articles()
-    elif argv[0] == '-getMostPopularAuthors':
+    elif argv[0] == '-getMostPopularAuthors' or argv[0] == '-popauth':
         getMostPopularAuthors()
-    elif argv[0] == '-getDaysWithMore1PercError':
+    elif argv[0] == '-getDaysWithMore1PercError' or argv[0] == '-errdays':
         getDaysWithMore1PercError()
 
 
