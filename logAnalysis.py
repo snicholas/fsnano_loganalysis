@@ -12,14 +12,19 @@ def connect():
         return None
 
 
+def executeQuery(query):
+    db = connect()
+    c = db.cursor()
+    c.execute(query)
+    res = c.fetchall()
+    db.close()
+    return res
+
+
 def getMostPopular3Articles():
     print("\n-----------------------------------------------------------")
     print('Most popular articles of all time:')
-    db = connect()
-    c = db.cursor()
-    c.execute('select * from mostviewedpath;')
-    res = c.fetchall()
-    db.close()
+    res = executeQuery('select * from mostviewedpath;')
     for l in res:
         print("\"%s\" -- %s views" % l)
     print("-----------------------------------------------------------\n")
@@ -28,11 +33,7 @@ def getMostPopular3Articles():
 def getMostPopularAuthors():
     print("\n-----------------------------------------------------------")
     print('Most popular authors of all time of all time:')
-    db = connect()
-    c = db.cursor()
-    c.execute('select * from authorviews;')
-    res = c.fetchall()
-    db.close()
+    res = executeQuery('select * from authorviews;')
     for l in res:
         print("%s -- %s views" % l)
     print("-----------------------------------------------------------\n")
@@ -41,11 +42,7 @@ def getMostPopularAuthors():
 def getDaysWithMore1PercError():
     print("\n-----------------------------------------------------------")
     print('Days with more than 1% of errors:')
-    db = connect()
-    c = db.cursor()
-    c.execute('select * from errorrequestperc where perc > 1;')
-    res = c.fetchall()
-    db.close()
+    res = executeQuery('select * from errorrequestperc where perc > 1;')
     for l in res:
         print("%s -- %s" % (l[0], round(l[1], 2)))
     print("-----------------------------------------------------------\n")
@@ -70,7 +67,7 @@ def main(argv):
         getMostPopular3Articles()
         getMostPopularAuthors()
         getDaysWithMore1PercError()
-    elif argv[0] == '-getMostPopular3Articles' or argv[0] =='-popart':
+    elif argv[0] == '-getMostPopular3Articles' or argv[0] == '-popart':
         getMostPopular3Articles()
     elif argv[0] == '-getMostPopularAuthors' or argv[0] == '-popauth':
         getMostPopularAuthors()
